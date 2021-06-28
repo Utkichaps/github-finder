@@ -1,8 +1,9 @@
-import { useState } from "react"
-import PropTypes from 'prop-types'
+import { useContext, useState } from "react"
+import githubContext from "../../context/github/githubContext";
 
-const Search = (props) => {
+const Search = () => {
 
+  const ctx = useContext(githubContext)
   const [text, setText] = useState('')
   const [alert, setAlert] = useState('')
 
@@ -16,7 +17,7 @@ const Search = (props) => {
       setAlert('Please enter something')
       setTimeout(() => setAlert(''),5000)
     } else {      
-      props.searchUser(text);
+      ctx.searchUser(text);      
     }
   }
 
@@ -27,7 +28,7 @@ const Search = (props) => {
         <input type="text" name="text" placeholder="Search users..." value={text} onChange={onChange}/>
         <input type="submit" value="Search" className="btn btn-dark btn-block" />
       </form>
-      {props.showClear && <button className="btn btn-light btn-block" onClick={props.clearUsers}>Clear</button>}
+      {ctx.users.length > 0 && <button className="btn btn-light btn-block" onClick={ctx.clearUsers}>Clear</button>}
     </div>
   );
 }
